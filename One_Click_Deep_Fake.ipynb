@@ -1,0 +1,131 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "gpuType": "T4",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    },
+    "accelerator": "GPU"
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/ardha27/DeepFake/blob/main/One_Click_Deep_Fake.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from google.colab import drive\n",
+        "drive.mount('/content/drive')"
+      ],
+      "metadata": {
+        "id": "jnFRbaYHP_Ch"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Don't put space on source/target name | Jangan meletakkan spasi pada nama file source/target"
+      ],
+      "metadata": {
+        "id": "FvBAwcEzZ0Py"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import os\n",
+        "\n",
+        "source = \"/content/drive/MyDrive/DeepFake/deddy.png\" # @param {type:\"string\"}\n",
+        "target = \"/content/drive/MyDrive/DeepFake/575p4d.mp4\" # @param {type:\"string\"}\n",
+        "\n",
+        "def create_output_path(source, target):\n",
+        "    # Extract the file names from the paths\n",
+        "    source_filename = source.split(\"/\")[-1].split(\".\")[0]\n",
+        "    target_filename = target.split(\"/\")[-1].split(\".\")[0]\n",
+        "\n",
+        "    # Extract the folder path from the target\n",
+        "    target_folder = \"/\".join(target.split(\"/\")[:-1])\n",
+        "\n",
+        "    # Create the output path by combining the target folder, target filename, and source filename\n",
+        "    output_filename = f\"{target_filename}-{source_filename}.mp4\"\n",
+        "    output_path = f\"{target_folder}/{output_filename}\"\n",
+        "\n",
+        "    return output_path\n",
+        "\n",
+        "output = create_output_path(source, target)\n",
+        "print(output)"
+      ],
+      "metadata": {
+        "id": "714lbx2hQiOz"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "t1yPuhdySqCq",
+        "collapsed": true
+      },
+      "outputs": [],
+      "source": [
+        "!git clone https://github.com/s0md3v/roop\n",
+        "%cd roop\n",
+        "!pip install onnxruntime-gpu && pip install -r requirements.txt\n",
+        "!wget https://civitai.com/api/download/models/85159 -O inswapper_128.onnx"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "command = f\"python run.py -s '{source}' -t '{target}' -o '{output}' --keep-frames --keep-fps --output-video-quality 18 --execution-provider cuda --frame-processor face_swapper face_enhancer\"\n",
+        "\n",
+        "!{command}"
+      ],
+      "metadata": {
+        "id": "4exqmhqJWA3i"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Advanced Command\n"
+      ],
+      "metadata": {
+        "id": "jr-63BTn8UEs"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "!python run.py -h"
+      ],
+      "metadata": {
+        "id": "qkRRQoNgW7_V"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
