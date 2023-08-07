@@ -10,7 +10,7 @@ Users of this software are expected to use this software responsibly while abidi
 </a>
 
 ### Tutorial (Indonesian)
-- https://youtu.be/mcbz_n6_w_A
+- https://youtu.be/DfXBCfH5ut0
 
 ### DeepFake
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ardha27/DeepFake/blob/main/One_Click_Deep_Fake.ipynb)
